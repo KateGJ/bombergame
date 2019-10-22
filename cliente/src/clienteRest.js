@@ -3,42 +3,35 @@ function ClienteRest(){
 	this.agregarUsuario=function(nick){
 		$.getJSON("/agregarUsuario/"+nick,function(data){    
     		console.log(data);
-    		mostrarUsuario(data);
+    		if (data.nick!=""){
+	    		mostrarUsuario(data);
+	    	}
+	    	else{
+	    		mostrarAviso("Utiliza otro nick");	
+	    	}
 		});
 	}
 	this.crearPartida=function(nombrePartida,nick){
 		$.getJSON("/crearPartida/"+nombrePartida+"/"+nick,function(data){    
     		console.log(data);
-    		//mostrarUsuario(data);
+    		mostrarPartida(data);
 		});
 	}
-
+	this.unirAPartida=function(nombrePartida,nick){
+		$.getJSON("/unirAPartida/"+nombrePartida+"/"+nick,function(data){    
+    		console.log(data);
+    		mostrarPartida(data);
+		});
+	}
 	this.obtenerPartidas=function(){
-		$.getJSON("/obtenerPartidas/",function(data){    
+		$.getJSON("/obtenerPartidas",function(data){    
     		console.log(data);
+    		mostrarListaPartidas(data);
 		});
 	}
-
-	this.unirAPartida=function(nombre,nick){
-		$.getJSON("/unirAPartida/"+nombre+"/"+nick,function(data){    
-    		console.log(data);
-		});
-	}
-
-	this.obtenerUsuarios=function(){
-		$.getJSON("/obtenerUsuarios/",function(data){    
-    		console.log(data);
-		});
-	}
-
 	this.obtenerJugadores=function(nombrePartida){
-		$.getJSON("/obtenerJugadores/"+nombrePartida,function(data){    
-    		console.log(data);
-		});
+		$.getJSON("/obtenerJugadores/"+nombrePartida,function(data){
+			console.log(data);
+		})
 	}
-
-	function mostrarUsuario(){
-		$('#mAU').remove();
-	}
-
 }
